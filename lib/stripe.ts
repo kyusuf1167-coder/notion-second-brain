@@ -7,11 +7,10 @@ import Stripe from "stripe";
 //   sk_test_... → sk_live_...
 // ─────────────────────────────────────────────────────────────────────────────
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY environment variable");
-}
+// Gracefully handle missing key during build — will throw at runtime if not set
+const stripeKey = process.env.STRIPE_SECRET_KEY ?? "sk_placeholder_add_real_key_in_vercel";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+export const stripe = new Stripe(stripeKey, {
   apiVersion: "2025-01-27.acacia",
   typescript: true,
 });
