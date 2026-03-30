@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/webhook  — Stripe webhook handler
@@ -57,23 +60,58 @@ export async function POST(req: NextRequest) {
 
       console.log(`[webhook] checkout.session.completed — session: ${sessionId}, email: ${customerEmail}`);
 
-      // ── TODO: Add email delivery here ────────────────────────────────────
-      // Option A — Resend:
-      //   import { Resend } from 'resend';
-      //   const resend = new Resend(process.env.RESEND_API_KEY);
-      //   await resend.emails.send({
-      //     from:    'noreply@secondbrain.so',
-      //     to:      customerEmail!,
-      //     subject: 'Your Second Brain is ready! 🚀',
-      //     html:    `<p>Here's your duplicate link: ${process.env.NEXT_PUBLIC_NOTION_TEMPLATE_URL}</p>`,
-      //   });
-      //
-      // Option B — Mailchimp (add customer to list):
-      //   await fetch(`https://us1.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members`, {
-      //     method: 'POST',
-      //     headers: { Authorization: `Basic ${Buffer.from(`anystring:${process.env.MAILCHIMP_API_KEY}`).toString('base64')}` },
-      //     body: JSON.stringify({ email_address: customerEmail, status: 'subscribed', tags: ['purchaser'] }),
-      //   });
+      if (customerEmail) {
+        const notionLink = process.env.NEXT_PUBLIC_NOTION_TEMPLATE_URL ?? "";
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://secondbrainvault.com";
+
+        await resend.emails.send({
+          from: "Second Brain Vault <onboarding@resend.dev>",
+          to: customerEmail,
+          subject: "🧠 Your Second Brain is ready — here's your access link!",
+          html: `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0a0b0f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e5e7eb;">
+  <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
+
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:48px;margin-bottom:8px;">🧠</div>
+      <h1 style="margin:0;font-size:28px;font-weight:800;color:#fff;">Your Second Brain is Ready!</h1>
+      <p style="margin:12px 0 0;color:#9ca3af;font-size:16px;">Thanks for your purchase. Click below to duplicate your workspace.</p>
+    </div>
+
+    <div style="background:#111827;border:1px solid #1f2937;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px;">
+      <a href="${notionLink}" style="display:inline-block;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font-weight:700;font-size:16px;padding:16px 32px;border-radius:12px;text-decoration:none;">
+        Open &amp; Duplicate in Notion →
+      </a>
+      <p style="margin:20px 0 0;color:#6b7280;font-size:13px;">Or copy this link: <a href="${notionLink}" style="color:#60a5fa;">${notionLink}</a></p>
+    </div>
+
+    <div style="background:#111827;border:1px solid #1f2937;border-radius:16px;padding:24px;margin-bottom:24px;">
+      <h2 style="margin:0 0 16px;font-size:16px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.05em;">Getting started in 3 steps</h2>
+      <ol style="margin:0;padding-left:20px;color:#9ca3af;font-size:14px;line-height:1.8;">
+        <li>Click <strong style="color:#e5e7eb;">"Open &amp; Duplicate in Notion"</strong> above</li>
+        <li>In Notion, click the blue <strong style="color:#e5e7eb;">"Duplicate"</strong> button in the top right</li>
+        <li>Start with the <strong style="color:#e5e7eb;">🏠 Master Home Dashboard</strong> — it links everything together</li>
+      </ol>
+    </div>
+
+    <div style="background:#0f1d12;border:1px solid #14532d;border-radius:12px;padding:16px 20px;margin-bottom:32px;">
+      <p style="margin:0;font-size:14px;color:#86efac;"><strong>🎁 Bonus:</strong> Your 25-page Quick-Start PDF is inside the workspace under <code style="background:#14532d;padding:2px 6px;border-radius:4px;">📚 Resources → Quick Start Guide</code></p>
+    </div>
+
+    <p style="text-align:center;color:#6b7280;font-size:13px;">
+      Questions? Reply to this email or reach us at <a href="mailto:hello@secondbrainvault.com" style="color:#60a5fa;">hello@secondbrainvault.com</a>
+    </p>
+
+  </div>
+</body>
+</html>`,
+        });
+
+        console.log(`[webhook] Delivery email sent to ${customerEmail}`);
+      }
 
       break;
     }
