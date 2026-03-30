@@ -16,78 +16,90 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const templates: { icon: React.ElementType; color: "blue" | "green"; title: string; desc: string }[] = [
+const templates: { icon: React.ElementType; color: "blue" | "green"; title: string; desc: string; tags: string[] }[] = [
   {
     icon: LayoutDashboard,
     color: "blue",
     title: "Master Home Dashboard",
-    desc: "Your mission control. Every important metric, task, and project at a glance the moment you open Notion.",
+    desc: "Your mission control. Live KPIs, today's tasks, active projects, habit rings, and weekly goals — all on one screen the moment you open Notion.",
+    tags: ["Linked databases", "Filtered views", "Quick capture"],
   },
   {
     icon: Target,
     color: "green",
     title: "Goals & OKR Tracker",
-    desc: "Annual → quarterly → weekly goal breakdown with progress bars and weekly review prompts built in.",
+    desc: "Annual → quarterly → weekly goal cascade. Auto-calculated completion % rolls up from tasks to key results to objectives. Weekly review prompts built in.",
+    tags: ["Progress formula", "Rollup properties", "Weekly review"],
   },
   {
     icon: CheckSquare,
     color: "blue",
     title: "GTD Task Manager",
-    desc: "Capture → clarify → organise → review → engage. Full Getting Things Done workflow with priority views.",
+    desc: "Full Getting Things Done workflow: Inbox → Next Actions → Waiting → Someday/Maybe. Priority score formula (urgency × importance) ranks your day automatically.",
+    tags: ["Priority formula", "5 views", "Project linking"],
   },
   {
     icon: BookOpen,
     color: "green",
     title: "Knowledge Base",
-    desc: "Tag, link, and resurface everything you read, watch, or learn. Bi-directional linking included.",
+    desc: "Tag, link, and resurface everything you read, watch, or learn. Bi-directional linking connects ideas across your entire workspace. Search that actually works.",
+    tags: ["Bi-directional links", "Tag taxonomy", "Source tracking"],
   },
   {
     icon: TrendingUp,
     color: "blue",
     title: "Project Hub",
-    desc: "Track every active project with status, deadlines, owners, and linked tasks — board + list + timeline views.",
+    desc: "Every active project tracked with status, deadlines, owners, linked tasks, and health score. Switch between Board, List, and Timeline views instantly.",
+    tags: ["Health score", "Timeline view", "Task rollup"],
   },
   {
     icon: Calendar,
     color: "green",
-    title: "Weekly Planner",
-    desc: "Sunday → Sunday planning system with time-blocking, energy zones, and deep-work blocks.",
+    title: "Weekly & Daily Planner",
+    desc: "Sunday → Sunday planning template with time-blocking, energy zones (high/low focus), deep-work blocks, and an end-of-week review built in.",
+    tags: ["Energy zones", "Time blocking", "Weekly review"],
   },
   {
     icon: Repeat,
     color: "blue",
     title: "Habit Tracker",
-    desc: "Daily, weekly, and monthly habit streaks with visual momentum charts to keep you on track.",
+    desc: "Track daily, weekly, and monthly habits with auto-calculated streak counters and completion rate %. Designed for the 66-day habit formation window.",
+    tags: ["Streak formula", "Completion %", "66-day system"],
   },
   {
     icon: Brain,
     color: "green",
     title: "Idea Incubator",
-    desc: "Capture shower thoughts, business ideas, and creative sparks. Rate, filter, and revisit on schedule.",
+    desc: "Capture shower thoughts, business ideas, and creative sparks in seconds. Rate by potential and effort. Filter to revisit your best ideas on a weekly schedule.",
+    tags: ["Effort/impact matrix", "Status pipeline", "Revisit schedule"],
   },
   {
     icon: Database,
     color: "blue",
     title: "CRM / People Database",
-    desc: "Track relationships, conversations, and follow-ups. Never forget a name, detail, or promise again.",
+    desc: "Track every relationship: when you last spoke, what was discussed, what you promised, and what they need. Days-since-contact formula flags who needs follow-up.",
+    tags: ["Days-since formula", "Relationship tags", "Follow-up queue"],
   },
   {
     icon: DollarSign,
     color: "green",
     title: "Finance Dashboard",
-    desc: "Income, expenses, savings goals, and net worth tracker. No formulas needed — just fill in the tables.",
+    desc: "Log income and expenses by category, track savings goals with % complete, and watch your net worth update automatically. No spreadsheet skills required.",
+    tags: ["Net worth formula", "Category rollups", "Savings goals"],
   },
   {
     icon: Lightbulb,
     color: "blue",
     title: "Content Creation HQ",
-    desc: "Plan, draft, and publish content across platforms. From idea to published in one linear pipeline.",
+    desc: "Full content pipeline from idea to published. Platform-specific statuses, linked resource library, repurposing tracker, and a publishing calendar all connected.",
+    tags: ["Multi-platform", "Pipeline stages", "Publishing calendar"],
   },
   {
     icon: Link2,
     color: "green",
     title: "Resource Library",
-    desc: "Bookmarks, courses, tools, and links — all tagged and searchable. Your personal internet, curated.",
+    desc: "Save bookmarks, courses, tools, and links with tags, source, and category. Searchable, filterable, and linked to your knowledge base and projects.",
+    tags: ["Tag filtering", "Source tracking", "KB linking"],
   },
 ];
 
@@ -122,7 +134,7 @@ export function Features() {
         {/* Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {templates.map((t, i) => (
-            <FeatureCard key={i} {...t} index={i} />
+            <FeatureCard key={i} {...t} index={i} tags={t.tags} />
           ))}
         </div>
 
@@ -156,12 +168,14 @@ function FeatureCard({
   title,
   desc,
   index,
+  tags,
 }: {
   icon: React.ElementType;
   color: "blue" | "green";
   title: string;
   desc: string;
   index: number;
+  tags: string[];
 }) {
   const isBlue = color === "blue";
   return (
@@ -170,39 +184,41 @@ function FeatureCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
-      className="group rounded-xl bg-dark-card border border-dark-border p-5 hover:border-brand-blue-500/40 hover:bg-dark-card/80 transition-all duration-300 cursor-default"
+      className="group rounded-xl bg-dark-card border border-dark-border p-5 hover:border-brand-blue-500/40 hover:bg-dark-card/80 transition-all duration-300 cursor-default flex flex-col"
     >
-      {/* Image placeholder */}
-      <div
-        className={`w-full aspect-video rounded-lg mb-4 flex items-center justify-center relative overflow-hidden ${
-          isBlue
-            ? "bg-brand-blue-900/30 border border-brand-blue-700/20"
-            : "bg-brand-green-900/30 border border-brand-green-700/20"
-        }`}
-      >
+      {/* Icon row */}
+      <div className="flex items-center gap-3 mb-3">
         <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage:
-              "linear-gradient(#3b82f620 1px, transparent 1px), linear-gradient(90deg, #3b82f620 1px, transparent 1px)",
-            backgroundSize: "16px 16px",
-          }}
-        />
-        <Icon
-          className={`w-8 h-8 relative z-10 ${
-            isBlue ? "text-brand-blue-400" : "text-brand-green-400"
+          className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            isBlue ? "bg-brand-blue-500/20" : "bg-brand-green-500/20"
           }`}
-        />
-        {/* Fake screenshot lines */}
-        <div className="absolute bottom-3 left-3 right-3 space-y-1 opacity-30">
-          <div className="h-1 bg-dark-border rounded" />
-          <div className="h-1 bg-dark-border rounded w-3/4" />
-          <div className="h-1 bg-dark-border rounded w-1/2" />
+        >
+          <Icon
+            className={`w-4 h-4 ${
+              isBlue ? "text-brand-blue-400" : "text-brand-green-400"
+            }`}
+          />
         </div>
+        <h3 className="text-white font-bold text-sm">{title}</h3>
       </div>
 
-      <h3 className="text-white font-bold text-sm mb-1.5">{title}</h3>
-      <p className="text-dark-muted text-xs leading-relaxed">{desc}</p>
+      <p className="text-dark-muted text-xs leading-relaxed mb-4 flex-1">{desc}</p>
+
+      {/* Feature tags */}
+      <div className="flex flex-wrap gap-1.5">
+        {tags.map((tag, i) => (
+          <span
+            key={i}
+            className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+              isBlue
+                ? "bg-brand-blue-900/50 text-brand-blue-300 border border-brand-blue-700/30"
+                : "bg-brand-green-900/50 text-brand-green-300 border border-brand-green-700/30"
+            }`}
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
     </motion.div>
   );
 }

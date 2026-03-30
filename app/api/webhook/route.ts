@@ -3,8 +3,6 @@ import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/webhook  — Stripe webhook handler
 //
@@ -61,6 +59,7 @@ export async function POST(req: NextRequest) {
       console.log(`[webhook] checkout.session.completed — session: ${sessionId}, email: ${customerEmail}`);
 
       if (customerEmail) {
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const notionLink = process.env.NEXT_PUBLIC_NOTION_TEMPLATE_URL ?? "";
         const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://secondbrainvault.com";
 
