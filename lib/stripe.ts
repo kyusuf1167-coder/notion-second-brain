@@ -11,7 +11,7 @@ import Stripe from "stripe";
 const stripeKey = process.env.STRIPE_SECRET_KEY ?? "sk_placeholder_add_real_key_in_vercel";
 
 export const stripe = new Stripe(stripeKey, {
-  apiVersion: "2025-01-27.acacia",
+  apiVersion: "2025-02-24.acacia",
   typescript: true,
 });
 

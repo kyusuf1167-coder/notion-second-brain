@@ -16,7 +16,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const templates = [
+const templates: { icon: React.ElementType; color: "blue" | "green"; title: string; desc: string }[] = [
   {
     icon: LayoutDashboard,
     color: "blue",
