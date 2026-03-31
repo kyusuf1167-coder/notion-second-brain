@@ -68,6 +68,8 @@ const deliverables = [
       "30-day Second Brain challenge calendar",
       "Notion keyboard shortcuts cheat sheet",
       "Personalisation recipes for 5 common use cases",
+      "Pre-loaded sample data in every database so you're never starting from scratch",
+      "Built-in 'How to Use' guide inside each dashboard — no YouTube required",
       "Lifetime updates — all future templates and improvements included",
       "Priority email support within 24 hours",
     ],

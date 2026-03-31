@@ -6,20 +6,24 @@ import { CheckCircle2, XCircle, Zap } from "lucide-react";
 import { useState } from "react";
 
 const included = [
-  "12 pre-built Notion dashboards",
-  "50+ database templates & page templates",
-  "GTD task management system",
-  "Goals & OKR tracker (annual + quarterly + weekly)",
-  "Finance dashboard & net worth tracker",
-  "CRM / People relationship database",
-  "Content creation pipeline",
-  "Habit tracker with streaks",
-  "Knowledge base with bi-directional linking",
-  "Project Hub with board, list & timeline views",
-  "Weekly & daily planner templates",
-  "Quick-start PDF guide (25 pages)",
-  "Lifetime access + all future updates",
-  "30-day money-back guarantee",
+  "12 fully-built Notion dashboards (not empty shells)",
+  "Pre-loaded sample data so you see exactly how to use each dashboard",
+  "How-to guide inside every dashboard — no YouTube tutorials needed",
+  "GTD task system with 5 statuses + daily workflow built-in",
+  "Goals & OKR tracker with annual → quarterly → weekly cascade",
+  "Habit tracker with streak counters (66-day system)",
+  "Finance dashboard — income, expenses, savings goals & net worth",
+  "Knowledge base with tags, ratings & key takeaway fields",
+  "Project Hub with health scores, board & list views",
+  "Idea Incubator with potential vs. effort rating matrix",
+  "Daily journal with mood, energy & gratitude tracking",
+  "Reading list with author, notes & rating (5-star system)",
+  "Resource library — tools, courses & links, all searchable",
+  "Weekly planner with theme, Top 3 goals & review prompts",
+  "25-page Quick-Start PDF guide included",
+  "30-Day Second Brain Challenge calendar",
+  "Lifetime access + all future updates — free forever",
+  "30-day money-back guarantee, no questions asked",
 ];
 
 const notIncluded = [
@@ -99,7 +103,7 @@ export function Pricing() {
               {/* Price */}
               <div className="mb-8">
                 <div className="flex items-start gap-2 mb-1">
-                  <span className="text-dark-muted line-through text-lg mt-3">$97</span>
+                  <span className="text-dark-muted line-through text-lg mt-3">$147</span>
                   <span className="text-6xl font-black text-white">$49</span>
                 </div>
                 <p className="text-dark-muted text-sm">
