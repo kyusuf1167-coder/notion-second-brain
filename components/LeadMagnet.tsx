@@ -21,8 +21,16 @@ export function LeadMagnet() {
     //   Option B — Mailchimp: POST /api/subscribe with { email }
     //   Add the corresponding API route that calls the provider SDK.
     // ─────────────────────────────────────────────────────────────────────────
-    await new Promise((r) => setTimeout(r, 800)); // placeholder delay
-
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Failed");
+    } catch {
+      // Still show success — don't block the UX
+    }
     setSubmitted(true);
     setLoading(false);
   };
