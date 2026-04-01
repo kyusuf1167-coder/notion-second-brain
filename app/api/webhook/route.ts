@@ -110,6 +110,21 @@ export async function POST(req: NextRequest) {
         });
 
         console.log(`[webhook] Delivery email sent to ${customerEmail}`);
+
+        // Add buyer to Resend audience for follow-up sequence
+        if (process.env.RESEND_AUDIENCE_ID) {
+          try {
+            await resend.contacts.create({
+              email: customerEmail,
+              audienceId: process.env.RESEND_AUDIENCE_ID,
+              unsubscribed: false,
+            });
+            console.log(`[webhook] Added ${customerEmail} to Resend audience`);
+          } catch (err) {
+            // Non-fatal — don't block delivery if audience add fails
+            console.warn(`[webhook] Could not add to audience:`, err);
+          }
+        }
       }
 
       break;

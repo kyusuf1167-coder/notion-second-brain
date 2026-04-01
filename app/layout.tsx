@@ -9,8 +9,8 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://secondbrain.so";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://secondbrainvault.com";
+const OG_IMAGE = `${SITE_URL}/og`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -22,22 +22,29 @@ export const metadata: Metadata = {
     "Stop drowning in tabs and to-dos. Get 12 Notion dashboards, 50+ templates, and a full GTD system built for 2026. One-time $49 — instant access, lifetime updates.",
   keywords: [
     "Notion template",
-    "second brain",
-    "productivity system",
-    "GTD Notion",
-    "Notion dashboard",
-    "2026 productivity",
-    "Notion bundle",
-    "personal knowledge management",
+    "Notion second brain",
+    "best Notion template 2026",
+    "Notion productivity system",
+    "GTD Notion template",
+    "Notion dashboard bundle",
+    "second brain Notion",
+    "personal knowledge management Notion",
+    "Notion habit tracker",
+    "Notion goal tracker",
+    "Notion finance dashboard",
+    "Notion project manager",
+    "Notion life os",
+    "Notion all in one workspace",
+    "notion template bundle",
   ],
-  authors: [{ name: "SecondBrain.so" }],
-  creator: "SecondBrain.so",
+  authors: [{ name: "SecondBrainVault" }],
+  creator: "SecondBrainVault",
   openGraph: {
     type:        "website",
     url:         SITE_URL,
     title:       "The Ultimate 2026 Notion Second Brain — 12 Dashboards, 50+ Templates",
     description: "One Notion workspace to capture everything, forget nothing, and ship what matters. $49 one-time — no subscription.",
-    siteName:    "SecondBrain.so",
+    siteName:    "SecondBrainVault",
     images: [
       {
         url:    OG_IMAGE,
